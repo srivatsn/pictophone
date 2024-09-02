@@ -93,6 +93,7 @@ class DrawingCanvas extends Component<DrawingCanvasProps, DrawingCanvasState> {
             }
         }
     };
+
     /**
      * Handles the mouse up event.
      * If the canvas is currently being drawn on, it saves the current state of the canvas to the history.
@@ -158,7 +159,7 @@ class DrawingCanvas extends Component<DrawingCanvasProps, DrawingCanvasState> {
     render() {
         return (
             <div className="App">
-                {this.state.canvasImage ? (
+                {this.state.isReadOnly && this.state.canvasImage ? (
                     <img src={this.state.canvasImage} alt="Drawing" className="drawing-image" />
                 ) : (
                         <canvas
@@ -173,10 +174,10 @@ class DrawingCanvas extends Component<DrawingCanvasProps, DrawingCanvasState> {
                         ></canvas>
                 )}
                 {!this.state.isReadOnly && (
-                <div className="buttons">
-                    <button onClick={this.handleUndo}>Undo</button>
-                    <button onClick={this.handleClear}>Clear</button>
-                </div>
+                    <div className="buttons">
+                        <button onClick={this.handleUndo}>Undo</button>
+                        <button onClick={this.handleClear}>Clear</button>
+                    </div>
                 )}
             </div>
         );

@@ -7,7 +7,6 @@ function App() {
   const [word, setWord] = useState<string>('Cat'); // Example word
   const [timeLeft, setTimeLeft] = useState<number>(60);
   const [showTextbox, setShowTextbox] = useState<boolean>(false);
-  const [description, setDescription] = useState<string>('');
   const descriptionRef = useRef<HTMLInputElement>(null);
 
   const handleStartGame = () => {
@@ -18,7 +17,7 @@ function App() {
     if (gameStarted && timeLeft > 0) {
       const timer = setTimeout(() => {
         setTimeLeft(timeLeft - 1);
-      }, 1000);
+      }, 100);
       return () => clearTimeout(timer);
     } else if (timeLeft === 0) {
       if (showTextbox) {
@@ -27,12 +26,12 @@ function App() {
         setShowTextbox(false);
         setTimeLeft(60);
       } else {
-      // Show description input
+        // Show description input
         setShowTextbox(true);
         setTimeLeft(60);
       }
     }
-  }, [gameStarted, timeLeft, showTextbox, word, description]);
+  }, [gameStarted, timeLeft, showTextbox, word]);
 
   return (
     <div className="App">
