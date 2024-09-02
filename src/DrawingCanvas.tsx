@@ -137,6 +137,7 @@ class DrawingCanvas extends Component<{}, DrawingCanvasState> {
                     width={500}
                     height={500}
                     className="drawing-canvas"
+                    data-testid="drawing-canvas"
                     onMouseDown={this.handleMouseDown}
                     onMouseMove={this.handleMouseMove}
                     onMouseUp={this.handleMouseUp}
