@@ -1,70 +1,23 @@
-# GitHub Codespaces ♥️ React
+# Pictophone
 
-Welcome to your shiny new Codespace running React! We've got everything fired up and running for you to explore React.
+Pictophone is a fun and interactive game that combines the elements of telephone and Pictionary. It is a perfect game for parties, gatherings, or simply to have a good time with friends and family.
 
-You've got a blank canvas to work on from a git perspective as well. There's a single initial commit with the what you're seeing right now - where you go from here is up to you!
+## How to Play
 
-Everything you do here is contained within this one codespace. There is no repository on GitHub yet. If and when you’re ready you can click "Publish Branch" and we’ll create your repository and push up your project. If you were just exploring then and have no further need for this code then you can simply delete your codespace and it's gone forever.
+1. Gather a group of players (minimum of 4).
+2. Each player needs a pen or pencil and a stack of blank paper.
+3. Decide on a starting phrase or sentence. This can be anything, from a famous quote to a random phrase.
+4. Each player writes down the chosen phrase or sentence on the first page of their stack of paper.
+5. Once everyone has finished writing, they pass their stack of paper to the player on their right.
+6. The next player looks at the phrase or sentence they received and, on the next page of the stack, draws a picture representing it.
+7. Once finished, they pass only the picture to the next player, who will now try to guess what the original phrase or sentence was and write it down on the next page.
+8. This process continues, alternating between drawing and guessing, until all players have their original stack of paper back.
+9. Finally, everyone takes turns sharing their stacks of paper, revealing how the original phrase or sentence transformed through the drawings and guesses.
 
-This project was bootstrapped for you with [Vite](https://vitejs.dev/).
+## Rules and Tips
 
-## Available Scripts
+- Players should refrain from talking or giving hints during the game, as it adds to the fun and unpredictability.
+- Encourage creativity and imagination when drawing and guessing.
+- It's okay if the final phrase or sentence is different from the original one. The transformations and interpretations are what make the game entertaining.
 
-In the project directory, you can run:
-
-### `npm start`
-
-We've already run this for you in the `Codespaces: server` terminal window below. If you need to stop the server for any reason you can just run `npm start` again to bring it back online.
-
-Runs the app in the development mode.\
-Open [http://localhost:3000/](http://localhost:3000/) in the built-in Simple Browser (`Cmd/Ctrl + Shift + P > Simple Browser: Show`) to view your running application.
-
-The page will reload automatically when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-## Learn More
-
-You can learn more in the [Vite documentation](https://vitejs.dev/guide/).
-
-To learn Vitest, a Vite-native testing framework, go to [Vitest documentation](https://vitest.dev/guide/)
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://sambitsahoo.com/blog/vite-code-splitting-that-works.html](https://sambitsahoo.com/blog/vite-code-splitting-that-works.html)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://github.com/btd/rollup-plugin-visualizer#rollup-plugin-visualizer](https://github.com/btd/rollup-plugin-visualizer#rollup-plugin-visualizer)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://dev.to/hamdankhan364/simplifying-progressive-web-app-pwa-development-with-vite-a-beginners-guide-38cf](https://dev.to/hamdankhan364/simplifying-progressive-web-app-pwa-development-with-vite-a-beginners-guide-38cf)
-
-### Advanced Configuration
-
-This section has moved here: [https://vitejs.dev/guide/build.html#advanced-base-options](https://vitejs.dev/guide/build.html#advanced-base-options)
-
-### Deployment
-
-This section has moved here: [https://vitejs.dev/guide/build.html](https://vitejs.dev/guide/build.html)
-
-### Troubleshooting
-
-This section has moved here: [https://vitejs.dev/guide/troubleshooting.html](https://vitejs.dev/guide/troubleshooting.html)
+Enjoy playing Pictophone and have a great time creating hilarious and unexpected outcomes!
