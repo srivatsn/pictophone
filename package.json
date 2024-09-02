@@ -1,9 +1,5 @@
 {
-  "name": "Pictophone",
-  "scripts": {
-    "precommit": "git add .",
-    "commit": "git commit -m \"Rename project to Pictophone\""
-  },
+  "name": "pictophone",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
