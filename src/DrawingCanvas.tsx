@@ -3,16 +3,24 @@ import './App.css';
 
 interface DrawingCanvasState {
     history: ImageData[];
+    isReadOnly: boolean;
+    canvasImage: string | null;
 }
 
-class DrawingCanvas extends Component<{}, DrawingCanvasState> {
+interface DrawingCanvasProps {
+    editable?: boolean;
+}
+
+class DrawingCanvas extends Component<DrawingCanvasProps, DrawingCanvasState> {
     private canvasRef = createRef<HTMLCanvasElement>();
     private isDrawing = false;
 
-    constructor(props: {}) {
+    constructor(props: DrawingCanvasProps) {
         super(props);
         this.state = {
             history: [],
+            isReadOnly: !props.editable,
+            canvasImage: null,
         };
     }
 
@@ -30,6 +38,17 @@ class DrawingCanvas extends Component<{}, DrawingCanvasState> {
         }
     }
 
+    componentDidUpdate(prevProps: DrawingCanvasProps) {
+        if (prevProps.editable !== this.props.editable) {
+            this.setState({ isReadOnly: !this.props.editable }, () => {
+                if (this.state.isReadOnly && this.canvasRef.current) {
+                    const canvas = this.canvasRef.current;
+                    this.setState({ canvasImage: canvas.toDataURL() });
+                }
+            });
+        }
+    }
+
     /**
      * Fills the canvas with white color.
      * 
@@ -44,6 +63,7 @@ class DrawingCanvas extends Component<{}, DrawingCanvasState> {
     }
 
     handleMouseDown = (e: MouseEvent<HTMLCanvasElement>) => {
+        if (this.state.isReadOnly) return;
         const canvas = this.canvasRef.current;
         if (canvas) {
             const context = canvas.getContext('2d');
@@ -56,7 +76,7 @@ class DrawingCanvas extends Component<{}, DrawingCanvasState> {
     };
 
     handleMouseMove = (e: MouseEvent<HTMLCanvasElement>) => {
-        if (!this.isDrawing) return;
+        if (!this.isDrawing || this.state.isReadOnly) return;
         const canvas = this.canvasRef.current;
         if (canvas) {
             const context = canvas.getContext('2d');
@@ -66,14 +86,13 @@ class DrawingCanvas extends Component<{}, DrawingCanvasState> {
             }
         }
     };
-
     /**
      * Handles the mouse up event.
      * If the canvas is currently being drawn on, it saves the current state of the canvas to the history.
      * @returns void
      */
     handleMouseUp = () => {
-        if (!this.isDrawing) return;
+        if (!this.isDrawing || this.state.isReadOnly) return;
         const canvas = this.canvasRef.current;
         if (canvas) {
             const context = canvas.getContext('2d');
@@ -97,7 +116,7 @@ class DrawingCanvas extends Component<{}, DrawingCanvasState> {
      * If there are no remaining items in the history, the canvas is cleared with a white color.
      */
     handleUndo = () => {
-        if (this.state.history.length === 0) return;
+        if (this.state.isReadOnly || this.state.history.length === 0) return;
         const canvas = this.canvasRef.current;
         if (canvas) {
             const context = canvas.getContext('2d');
@@ -118,6 +137,7 @@ class DrawingCanvas extends Component<{}, DrawingCanvasState> {
      * Clears the drawing canvas by filling it with white color and resetting the drawing history.
      */
     handleClear = () => {
+        if (this.state.isReadOnly) return;
         const canvas = this.canvasRef.current;
         if (canvas) {
             const context = canvas.getContext('2d');
@@ -131,20 +151,26 @@ class DrawingCanvas extends Component<{}, DrawingCanvasState> {
     render() {
         return (
             <div className="App">
-                <canvas
-                    ref={this.canvasRef}
-                    width={500}
-                    height={500}
-                    className="drawing-canvas"
-                    data-testid="drawing-canvas"
-                    onMouseDown={this.handleMouseDown}
-                    onMouseMove={this.handleMouseMove}
-                    onMouseUp={this.handleMouseUp}
-                ></canvas>
+                {this.state.canvasImage ? (
+                    <img src={this.state.canvasImage} alt="Drawing" className="drawing-image" />
+                ) : (
+                        <canvas
+                            ref={this.canvasRef}
+                            width={500}
+                            height={500}
+                            className="drawing-canvas"
+                            data-testid="drawing-canvas"
+                            onMouseDown={this.handleMouseDown}
+                            onMouseMove={this.handleMouseMove}
+                            onMouseUp={this.handleMouseUp}
+                        ></canvas>
+                )}
+                {!this.state.isReadOnly && (
                 <div className="buttons">
                     <button onClick={this.handleUndo}>Undo</button>
                     <button onClick={this.handleClear}>Clear</button>
                 </div>
+                )}
             </div>
         );
     }

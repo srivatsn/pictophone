@@ -66,3 +66,21 @@ button {
 .small {
   font-size: 0.75rem;
 }
+.timer {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.description {
+  margin-top: 20px;
+  width: 50%;
+  font-size: 16px;
+  padding: 10px;
+  text-align: center;
+}
+
+.drawing-image {
+  width: 500px;
+  height: 500px;
+  margin-top: 20px;
+}
