@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
 import DrawingCanvas from './DrawingCanvas';
 
@@ -7,6 +7,8 @@ function App() {
   const [word, setWord] = useState<string>('Cat'); // Example word
   const [timeLeft, setTimeLeft] = useState<number>(60);
   const [showTextbox, setShowTextbox] = useState<boolean>(false);
+  const [description, setDescription] = useState<string>('');
+  const descriptionRef = useRef<HTMLInputElement>(null);
 
   const handleStartGame = () => {
     setGameStarted(true);
@@ -19,34 +21,38 @@ function App() {
       }, 1000);
       return () => clearTimeout(timer);
     } else if (timeLeft === 0) {
-      setShowTextbox(true);
+      if (showTextbox) {
+        // Reset to drawing mode with new word
+        setWord(descriptionRef.current?.value || word);
+        setShowTextbox(false);
+        setTimeLeft(60);
+      } else {
+      // Show description input
+        setShowTextbox(true);
+        setTimeLeft(60);
+      }
     }
-  }, [gameStarted, timeLeft]);
+  }, [gameStarted, timeLeft, showTextbox, word, description]);
 
   return (
     <div className="App">
       {gameStarted ? (
         <header className="App-header">
           <h1>Pictophone</h1>
-          {
-            timeLeft > 0 ? (
-              <>
-                <p className="word">{word}</p>
-                <p className="timer">Time left: {timeLeft}s</p>
-              </>
-            ) : null
-          }
-          <DrawingCanvas editable={timeLeft > 0} />
-          {
-            showTextbox && (
-              <input
-                type="text"
-                className="description"
-                readOnly
-                placeholder="Describe the drawing..."
-              />
-            )
-          }
+          <p className="timer">Time left: {timeLeft}s</p>
+          {showTextbox ? (
+            <input
+              type="text"
+              className="description"
+              ref={descriptionRef}
+              placeholder="Describe the drawing..."
+            />
+          ) : (
+            <>
+              <p className="word">{word}</p>
+              <DrawingCanvas editable={!showTextbox} />
+            </>
+          )}
         </header>
       ) : (
         <div className="start-screen">

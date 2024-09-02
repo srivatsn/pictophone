@@ -44,6 +44,13 @@ class DrawingCanvas extends Component<DrawingCanvasProps, DrawingCanvasState> {
                 if (this.state.isReadOnly && this.canvasRef.current) {
                     const canvas = this.canvasRef.current;
                     this.setState({ canvasImage: canvas.toDataURL() });
+                } else if (!this.state.isReadOnly && this.canvasRef.current) {
+                    const canvas = this.canvasRef.current;
+                    const context = canvas.getContext('2d');
+                    if (context) {
+                        this.fillCanvasWhite(context);
+                        this.setState({ history: [] });
+                    }
                 }
             });
         }
