@@ -25,8 +25,7 @@ class DrawingCanvas extends Component<{}, DrawingCanvasState> {
         if (canvas) {
             const context = canvas.getContext('2d');
             if (context) {
-                context.fillStyle = '#FFFFFF';
-                context.fillRect(0, 0, canvas.width, canvas.height);
+                this.fillCanvasWhite(context);
             }
         }
     }
