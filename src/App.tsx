@@ -13,6 +13,20 @@ function App() {
     setGameStarted(true);
   };
 
+  const endTurn = () => {
+    // Logic to handle the end of the turn
+    if (showTextbox) {
+      // Reset to drawing mode with new word
+      setWord(descriptionRef.current?.value || word);
+      setShowTextbox(false);
+      setTimeLeft(60);
+    } else {
+      // Show description input
+      setShowTextbox(true);
+      setTimeLeft(60);
+    }
+  };
+
   useEffect(() => {
     if (gameStarted && timeLeft > 0) {
       const timer = setTimeout(() => {
@@ -20,25 +34,19 @@ function App() {
       }, 1000);
       return () => clearTimeout(timer);
     } else if (timeLeft === 0) {
-      if (showTextbox) {
-        // Reset to drawing mode with new word
-        setWord(descriptionRef.current?.value || word);
-        setShowTextbox(false);
-        setTimeLeft(60);
-      } else {
-        // Show description input
-        setShowTextbox(true);
-        setTimeLeft(60);
-      }
+      endTurn();
     }
-  }, [gameStarted, timeLeft, showTextbox, word]);
+  }, [gameStarted, timeLeft]);
 
   return (
     <div className="App">
       {gameStarted ? (
         <header className="App-header">
           <h1>Pictophone</h1>
-          <p className="timer">Time left: {timeLeft}s</p>
+          <div className="timer-container">
+            <p className="timer">Time left: {timeLeft}s</p>
+            <button onClick={endTurn} className="end-turn-button">End Turn</button>
+          </div>
           {!showTextbox &&
             <p className="word">{word}</p>
           }
