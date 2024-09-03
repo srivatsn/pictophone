@@ -17,7 +17,7 @@ function App() {
     if (gameStarted && timeLeft > 0) {
       const timer = setTimeout(() => {
         setTimeLeft(timeLeft - 1);
-      }, 100);
+      }, 1000);
       return () => clearTimeout(timer);
     } else if (timeLeft === 0) {
       if (showTextbox) {
@@ -39,19 +39,17 @@ function App() {
         <header className="App-header">
           <h1>Pictophone</h1>
           <p className="timer">Time left: {timeLeft}s</p>
-          {showTextbox ? (
+          {!showTextbox &&
+            <p className="word">{word}</p>
+          }
+          <DrawingCanvas editable={!showTextbox} />
+          {showTextbox &&
             <input
               type="text"
               className="description"
               ref={descriptionRef}
-              placeholder="Describe the drawing..."
-            />
-          ) : (
-            <>
-              <p className="word">{word}</p>
-              <DrawingCanvas editable={!showTextbox} />
-            </>
-          )}
+              placeholder="Describe the drawing..." />
+          }
         </header>
       ) : (
         <div className="start-screen">
