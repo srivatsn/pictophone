@@ -77,6 +77,7 @@ button {
 }
 
 .end-turn-button {
+  margin-left: 20px;
   padding: 5px 10px;
   font-size: 16px;
 }
@@ -117,4 +118,18 @@ button {
   height: auto;
   margin-right: 10px;
   /* Adjust the margin as needed */
+}
+.current-player {
+  margin-right: 30px;
+  font-size: 24px;
+}
+
+.game-over-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 24px;
+  background-color: #282c34;
+  color: white;
 }

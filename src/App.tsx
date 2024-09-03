@@ -9,14 +9,18 @@ function App() {
   const [showTextbox, setShowTextbox] = useState<boolean>(false);
   const [numPlayers, setNumPlayers] = useState('');
   const [isValidNumPlayers, setIsValidNumPlayers] = useState(false);
+  const [currentPlayer, setCurrentPlayer] = useState(1);
+  const [gameOver, setGameOver] = useState(false);
   const descriptionRef = useRef<HTMLInputElement>(null);
 
   const handleStartGame = () => {
     setGameStarted(true);
   };
 
+  /**
+   * End the current turn and move on to the next player.
+   */
   const endTurn = () => {
-    // Logic to handle the end of the turn
     if (showTextbox) {
       // Reset to drawing mode with new word
       setWord(descriptionRef.current?.value || word);
@@ -26,6 +30,12 @@ function App() {
       // Show description input
       setShowTextbox(true);
       setTimeLeft(60);
+    }
+
+    if (currentPlayer < parseInt(numPlayers, 10)) {
+      setCurrentPlayer(currentPlayer + 1);
+    } else {
+      setGameOver(true);
     }
   };
 
@@ -54,12 +64,18 @@ function App() {
   return (
     <div className="App">
       {gameStarted ? (
+        gameOver ? (
+          <div className="game-over-screen">
+            <h1>Game Over</h1>
+          </div>
+        ) : (
         <header className="App-header">
           <h1 className="title-container">
             <img src="../public/Pictophone.png" alt="Logo" className="logo" />
             Pictophone
           </h1>
           <div className="timer-container">
+                <p className="current-player">Player {currentPlayer}</p>
             <p className="timer">Time left: {timeLeft}s</p>
             <button onClick={endTurn} className="end-turn-button">End Turn</button>
           </div>
@@ -75,6 +91,7 @@ function App() {
               placeholder="Describe the drawing..." />
           }
         </header>
+          )
       ) : (
         <div className="start-screen">
             <h1 className="title-container">
