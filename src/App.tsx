@@ -1,20 +1,23 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
 import DrawingCanvas from './DrawingCanvas';
+import StartScreen from './StartScreen';
 
 function App() {
   const [gameStarted, setGameStarted] = useState<boolean>(false);
-  const [word, setWord] = useState<string>('Cat'); // Example word
+  const [word, setWord] = useState<string>('');
   const [timeLeft, setTimeLeft] = useState<number>(60);
   const [showTextbox, setShowTextbox] = useState<boolean>(false);
-  const [numPlayers, setNumPlayers] = useState('');
-  const [isValidNumPlayers, setIsValidNumPlayers] = useState(false);
+  const [numPlayers, setNumPlayers] = useState<number>(0);
   const [currentPlayer, setCurrentPlayer] = useState(1);
   const [gameOver, setGameOver] = useState(false);
   const descriptionRef = useRef<HTMLInputElement>(null);
 
-  const handleStartGame = () => {
+  const handleStartGame = (numPlayers: number) => {
+    setNumPlayers(numPlayers);
     setGameStarted(true);
+    setTimeLeft(60);
+    setWord('example'); // Set the initial word or fetch it from an API
   };
 
   /**
@@ -32,23 +35,13 @@ function App() {
       setTimeLeft(60);
     }
 
-    if (currentPlayer < parseInt(numPlayers, 10)) {
+    if (currentPlayer < numPlayers) {
       setCurrentPlayer(currentPlayer + 1);
     } else {
       setGameOver(true);
     }
   };
 
-  const handleNumPlayersChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    const num = parseInt(value, 10);
-    if (!isNaN(num) && num > 0 && num < 20) {
-      setIsValidNumPlayers(true);
-    } else {
-      setIsValidNumPlayers(false);
-    }
-    setNumPlayers(value);
-  };
 
   useEffect(() => {
     if (gameStarted && timeLeft > 0) {
@@ -69,52 +62,31 @@ function App() {
             <h1>Game Over</h1>
           </div>
         ) : (
-        <header className="App-header">
-          <h1 className="title-container">
-            <img src="../public/Pictophone.png" alt="Logo" className="logo" />
-            Pictophone
-          </h1>
-          <div className="timer-container">
+            <header className="App-header">
+              <h1 className="title-container">
+                <img src="../public/Pictophone.png" alt="Logo" className="logo" />
+                Pictophone
+              </h1>
+              <div className="timer-container">
                 <p className="current-player">Player {currentPlayer}</p>
-            <p className="timer">Time left: {timeLeft}s</p>
-            <button onClick={endTurn} className="end-turn-button">End Turn</button>
-          </div>
-          {!showTextbox &&
-            <p className="word">{word}</p>
-          }
-          <DrawingCanvas editable={!showTextbox} />
-          {showTextbox &&
-            <input
-              type="text"
-              className="description"
-              ref={descriptionRef}
-              placeholder="Describe the drawing..." />
-          }
-        </header>
+                <p className="timer">Time left: {timeLeft}s</p>
+                <button onClick={endTurn} className="end-turn-button">End Turn</button>
+              </div>
+              {!showTextbox &&
+                <p className="word">{word}</p>
+              }
+              <DrawingCanvas editable={!showTextbox} />
+              {showTextbox &&
+                <input
+                  type="text"
+                  className="description"
+                  ref={descriptionRef}
+                  placeholder="Describe the drawing..." />
+              }
+            </header>
           )
       ) : (
-        <div className="start-screen">
-            <h1 className="title-container">
-              <img src="../public/Pictophone.png" alt="Logo" className="logo" />
-              Pictophone
-            </h1>
-            <label htmlFor="num-players-input" className="num-players-label">
-              Number of players (0 to 20):
-            </label>
-            <input
-              type="number"
-              value={numPlayers}
-              onChange={handleNumPlayersChange}
-              placeholder="Enter number of players"
-              className="num-players-input"
-            />
-            <button
-              onClick={handleStartGame}
-              className="start-button"
-              disabled={!isValidNumPlayers}>
-            Start Game
-          </button>
-        </div>
+          <StartScreen onStartGame={handleStartGame} />
       )}
     </div>
   );
