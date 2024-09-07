@@ -126,10 +126,30 @@ button {
 
 .game-over-screen {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100vh;
   font-size: 24px;
   background-color: #282c34;
   color: white;
+}
+.game-over-text {
+  margin-bottom: 20px;
+  /* Add padding below the Game Over text */
+}
+
+.restart-button {
+  padding: 10px 20px;
+  font-size: 18px;
+  color: #282c34;
+  background-color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.restart-button:hover {
+  background-color: #f0f0f0;
 }

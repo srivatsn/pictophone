@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './App.css';
 import StartScreen from './StartScreen';
 import GameScreen from './GameScreen';
+import EndScreen from './EndScreen';
 
 function App() {
   const [gameStarted, setGameStarted] = useState(false);
@@ -19,13 +20,18 @@ function App() {
     setGameOver(true);
   };
 
+  const handleRestart = () => {
+    setGameStarted(false);
+    setGameOver(false);
+    setWord('');
+    setNumPlayers(0);
+  };
+
   return (
     <div className="App">
       {gameStarted ? (
         gameOver ? (
-          <div className="game-over-screen">
-            <h1>Game Over</h1>
-          </div>
+          <EndScreen onRestart={handleRestart} />
         ) : (
             <GameScreen
               numPlayers={numPlayers}
