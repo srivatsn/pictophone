@@ -15,21 +15,30 @@ const GameScreen: React.FC<GameScreenProps> = ({
     const [timeLeft, setTimeLeft] = useState(60);
     const [currentPlayer, setCurrentPlayer] = useState(1);
     const [showTextbox, setShowTextbox] = useState(false);
+    const [countdown, setCountdown] = useState(0);
     const [currentWord, setWord] = useState(startingWord);
     const [results, setResults] = useState<Array<{ player: number; result: string; isImage: boolean }>>([]);
     const descriptionRef = useRef<HTMLInputElement>(null);
     const canvasRef = createRef<DrawingCanvas>();
 
     useEffect(() => {
-        if (timeLeft > 0) {
-            const timer = setTimeout(() => {
-                setTimeLeft(timeLeft - 1);
-            }, 1000);
-            return () => clearTimeout(timer);
-        } else if (timeLeft === 0) {
-            endTurn();
+        let countdownTimer: NodeJS.Timeout;
+        if (countdown > 0) {
+            countdownTimer = setTimeout(() => setCountdown(countdown - 1), 1000);
+        } else if (countdown === 0 && countdown !== null) {
+            if (timeLeft > 0) {
+                const timer = setTimeout(() => {
+                    setTimeLeft(timeLeft - 1);
+                }, 1000);
+                return () => clearTimeout(timer);
+            } else if (timeLeft === 0) {
+                endTurn();
+            }
         }
-    }, [timeLeft]);
+        return () => {
+            clearTimeout(countdownTimer);
+        }
+    }, [timeLeft, countdown]);
 
     /**
      * End the current turn and move on to the next player.
@@ -57,6 +66,8 @@ const GameScreen: React.FC<GameScreenProps> = ({
         } else {
             onGameOver(newResults);
         }
+
+        setCountdown(5);
     };
 
     return (
@@ -70,16 +81,24 @@ const GameScreen: React.FC<GameScreenProps> = ({
                 <p className="timer">Time left: {timeLeft}s</p>
                 <button onClick={endTurn} className="end-turn-button">End Turn</button>
             </div>
-            {!showTextbox && <p className="word">{currentWord}</p>}
-            <DrawingCanvas ref={canvasRef} editable={!showTextbox} />
-            {showTextbox && (
-                <input
-                    type="text"
-                    className="description"
-                    ref={descriptionRef}
-                    placeholder="Describe the drawing..."
-                />
-            )}
+            {countdown > 0 ?
+                <div className="countdown-container">
+                    <div className="countdown-circle"></div>
+                    <p className="countdown">{countdown}</p>
+                </div> :
+                <div>
+                    {!showTextbox && <p className="word">{currentWord}</p>}
+                    <DrawingCanvas ref={canvasRef} editable={!showTextbox} />
+                    {showTextbox && (
+                        <input
+                            type="text"
+                            className="description"
+                            ref={descriptionRef}
+                            placeholder="Describe the drawing..."
+                        />
+                    )}
+                </div>
+            }
         </header>
     );
 };
