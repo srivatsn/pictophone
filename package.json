@@ -2,6 +2,7 @@
   "name": "pictophone",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "dependencies": {
     "canvas": "^2.11.2",
     "react": "^18.2.0",
