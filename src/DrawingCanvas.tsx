@@ -160,6 +160,18 @@ class DrawingCanvas extends Component<DrawingCanvasProps, DrawingCanvasState> {
         }
     };
 
+    /**
+     * Retrieves the image data of the canvas.
+     * @returns The image data of the canvas as a data URL, or null if the canvas is not available.
+     */
+    getCanvasImage = () => {
+        const canvas = this.canvasRef.current;
+        if (canvas) {
+            return canvas.toDataURL();
+        }
+        return null;
+    }
+
     render() {
         return (
             <div className="App">
