@@ -1,4 +1,4 @@
-import React, { Component, createRef, MouseEvent } from 'react';
+import React, { Component, createRef, MouseEvent, TouchEvent } from 'react';
 import './App.css';
 
 interface DrawingCanvasState {
@@ -73,29 +73,14 @@ class DrawingCanvas extends Component<DrawingCanvasProps, DrawingCanvasState> {
         }
     }
 
-    handleMouseDown = (e: MouseEvent<HTMLCanvasElement>) => {
+    handleMouseDown = (event: MouseEvent<HTMLCanvasElement>) => {
         if (this.state.isReadOnly) return;
-        const canvas = this.canvasRef.current;
-        if (canvas) {
-            const context = canvas.getContext('2d');
-            if (context) {
-                context.moveTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
-                context.beginPath();
-                this.isDrawing = true;
-            }
-        }
+        this.startDrawing(event.clientX, event.clientY);
     };
 
-    handleMouseMove = (e: MouseEvent<HTMLCanvasElement>) => {
+    handleMouseMove = (event: MouseEvent<HTMLCanvasElement>) => {
         if (!this.isDrawing || this.state.isReadOnly) return;
-        const canvas = this.canvasRef.current;
-        if (canvas) {
-            const context = canvas.getContext('2d');
-            if (context) {
-                context.lineTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
-                context.stroke();
-            }
-        }
+        this.draw(event.clientX, event.clientY);
     };
 
     /**
@@ -105,19 +90,62 @@ class DrawingCanvas extends Component<DrawingCanvasProps, DrawingCanvasState> {
      */
     handleMouseUp = () => {
         if (!this.isDrawing || this.state.isReadOnly) return;
+        this.stopDrawing();
+
+    };
+
+    handleTouchStart = (event: TouchEvent) => {
+        if (this.state.isReadOnly) return;
+        this.isDrawing = true;
+        const touch = event.touches[0];
+        this.startDrawing(touch.clientX, touch.clientY);
+    };
+
+    handleTouchMove = (event: TouchEvent) => {
+        if (!this.isDrawing || this.state.isReadOnly) return;
+        const touch = event.touches[0];
+        this.draw(touch.clientX, touch.clientY);
+    };
+
+    handleTouchEnd = () => {
+        if (this.state.isReadOnly) return;
+        this.stopDrawing();
+    };
+
+    startDrawing = (x: number, y: number) => {
         const canvas = this.canvasRef.current;
-        if (canvas) {
-            const context = canvas.getContext('2d');
-            if (context) {
-                this.setState((prevState) => ({
-                    history: [
-                        ...prevState.history,
-                        context.getImageData(0, 0, canvas.width, canvas.height),
-                    ],
-                }));
-                this.isDrawing = false;
-            }
-        }
+        if (!canvas) return;
+        const context = canvas.getContext('2d');
+        if (!context) return;
+
+        context.moveTo(x - canvas.offsetLeft, y - canvas.offsetTop);
+        context.beginPath();
+        this.isDrawing = true;
+    };
+
+    draw = (x: number, y: number) => {
+        const canvas = this.canvasRef.current;
+        if (!canvas) return;
+        const context = canvas.getContext('2d');
+        if (!context) return;
+
+        context.lineTo(x - canvas.offsetLeft, y - canvas.offsetTop);
+        context.stroke();
+    };
+
+    stopDrawing = () => {
+        const canvas = this.canvasRef.current;
+        if (!canvas) return;
+        const context = canvas.getContext('2d');
+        if (!context) return;
+
+        this.setState((prevState) => ({
+            history: [
+                ...prevState.history,
+                context.getImageData(0, 0, canvas.width, canvas.height),
+            ],
+        }));
+        this.isDrawing = false;
     };
 
     /**
@@ -187,6 +215,9 @@ class DrawingCanvas extends Component<DrawingCanvasProps, DrawingCanvasState> {
                             onMouseDown={this.handleMouseDown}
                             onMouseMove={this.handleMouseMove}
                             onMouseUp={this.handleMouseUp}
+                            onTouchStart={this.handleTouchStart}
+                            onTouchMove={this.handleTouchMove}
+                            onTouchEnd={this.handleTouchEnd}
                         ></canvas>
                 )}
                 {!this.state.isReadOnly && (
