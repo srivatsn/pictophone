@@ -62,7 +62,7 @@ const GameScreen: React.FC<GameScreenProps> = ({
     return (
         <header className="App-header">
             <h1 className="title-container">
-                <img src="../public/Pictophone.png" alt="Logo" className="logo" />
+                <img src="/Pictophone.png" alt="Logo" className="logo" />
                 Pictophone
             </h1>
             <div className="timer-container">

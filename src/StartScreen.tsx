@@ -25,9 +25,10 @@ const StartScreen: React.FC<StartScreenProps> = ({ onStartGame }) => {
 
   return (
     <div className="start-screen">
-      <h1 className="title-container">
-        Pictophone
-      </h1>
+      <div className="title-container">
+        <img src="/Pictophone.png" alt="Logo" className="logo" />
+        <h1 className="title">Pictophone</h1>
+      </div>
       <label htmlFor="num-players-input" className="num-players-label">
         Number of players (0 to 20):
       </label>

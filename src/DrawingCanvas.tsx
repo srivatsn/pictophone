@@ -94,21 +94,34 @@ class DrawingCanvas extends Component<DrawingCanvasProps, DrawingCanvasState> {
 
     };
 
-    handleTouchStart = (event: TouchEvent) => {
+    handleMouseLeave = () => {
         if (this.state.isReadOnly) return;
-        this.isDrawing = true;
+        this.stopDrawing();
+    };
+
+    handleTouchStart = (event: TouchEvent<HTMLCanvasElement>) => {
+        if (this.state.isReadOnly) return;
+        event.preventDefault();
         const touch = event.touches[0];
         this.startDrawing(touch.clientX, touch.clientY);
     };
 
-    handleTouchMove = (event: TouchEvent) => {
+    handleTouchMove = (event: TouchEvent<HTMLCanvasElement>) => {
         if (!this.isDrawing || this.state.isReadOnly) return;
+        event.preventDefault();
         const touch = event.touches[0];
         this.draw(touch.clientX, touch.clientY);
     };
 
-    handleTouchEnd = () => {
+    handleTouchEnd = (event: TouchEvent<HTMLCanvasElement>) => {
         if (this.state.isReadOnly) return;
+        event.preventDefault();
+        this.stopDrawing();
+    };
+
+    handleTouchCancel = (event: TouchEvent<HTMLCanvasElement>) => {
+        if (this.state.isReadOnly) return;
+        event.preventDefault();
         this.stopDrawing();
     };
 
@@ -215,6 +228,7 @@ class DrawingCanvas extends Component<DrawingCanvasProps, DrawingCanvasState> {
                             onMouseDown={this.handleMouseDown}
                             onMouseMove={this.handleMouseMove}
                             onMouseUp={this.handleMouseUp}
+                            onMouseLeave={this.handleMouseLeave}
                             onTouchStart={this.handleTouchStart}
                             onTouchMove={this.handleTouchMove}
                             onTouchEnd={this.handleTouchEnd}
