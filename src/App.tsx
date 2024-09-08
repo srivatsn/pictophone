@@ -3,6 +3,7 @@ import './App.css';
 import StartScreen from './StartScreen';
 import GameScreen from './GameScreen';
 import EndScreen from './EndScreen';
+import { getRandomWord } from './wordSet';
 
 function App() {
   const [gameStarted, setGameStarted] = useState(false);
@@ -14,7 +15,7 @@ function App() {
   const handleStartGame = (numPlayers: number) => {
     setNumPlayers(numPlayers);
     setGameStarted(true);
-    setWord('example'); // Set the initial word or fetch it from an API
+    setWord(getRandomWord());
   };
 
   const handleGameOver = (results: Array<{ player: number; result: string; isImage: boolean }>) => {
