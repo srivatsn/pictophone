@@ -81,24 +81,25 @@ const GameScreen: React.FC<GameScreenProps> = ({
                 <p className="timer">Time left: {timeLeft}s</p>
                 <button onClick={endTurn} className="end-turn-button">End Turn</button>
             </div>
-            {countdown > 0 ?
-                <div className="countdown-container">
-                    <div className="countdown-circle"></div>
-                    <p className="countdown">{countdown}</p>
-                </div> :
-                <div>
-                    {!showTextbox && <p className="word">{currentWord}</p>}
-                    <DrawingCanvas ref={canvasRef} editable={!showTextbox} />
-                    {showTextbox && (
-                        <input
-                            type="text"
-                            className="description"
-                            ref={descriptionRef}
-                            placeholder="Describe the drawing..."
-                        />
-                    )}
-                </div>
-            }
+            <div className="canvas-container">
+                {countdown > 0 && (
+                    <div className="countdown-container">
+                        <div className="countdown-circle"></div>
+                        <p className="countdown">{countdown}</p>
+                    </div>
+                )}
+
+                {!showTextbox && <p className="word">{currentWord}</p>}
+                <DrawingCanvas ref={canvasRef} editable={!showTextbox} />
+                {showTextbox && (
+                    <input
+                        type="text"
+                        className="description"
+                        ref={descriptionRef}
+                        placeholder="Describe the drawing..."
+                    />
+                )}
+            </div>
         </header>
     );
 };
