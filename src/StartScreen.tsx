@@ -25,28 +25,38 @@ const StartScreen: React.FC<StartScreenProps> = ({ onStartGame }) => {
 
   return (
     <div className="start-screen">
-      <div className="title-container">
-        <img src="/Pictophone.png" alt="Logo" className="logo" />
-        <h1 className="title">Pictophone</h1>
+      <div className="floating-shape shape1"></div>
+      <div className="floating-shape shape2"></div>
+      <div className="start-screen-content">
+        <div className="title-container">
+          <img src="/Pictophone.png" alt="Logo" className="logo" />
+          <h1 className="title">Pictophone</h1>
+        </div>
+        <p className="game-description">
+          A fun drawing and guessing game! Players take turns drawing pictures and guessing what they represent. 
+          See how your ideas transform as they pass from player to player!
+        </p>
+        <label htmlFor="num-players-input" className="num-players-label">
+          Number of players (1 to 20):
+        </label>
+        <input
+          id="num-players-input"
+          type="number"
+          value={numPlayers}
+          onChange={handleNumPlayersChange}
+          placeholder="Enter number of players"
+          className="num-players-input"
+          min="1"
+          max="20"
+        />
+        <button
+          onClick={handleStartGame}
+          className="start-button"
+          disabled={!isValidNumPlayers}
+        >
+          Start Game
+        </button>
       </div>
-      <label htmlFor="num-players-input" className="num-players-label">
-        Number of players (0 to 20):
-      </label>
-      <input
-        id="num-players-input"
-        type="number"
-        value={numPlayers}
-        onChange={handleNumPlayersChange}
-        placeholder="Enter number of players"
-        className="num-players-input"
-      />
-      <button
-        onClick={handleStartGame}
-        className="start-button"
-        disabled={!isValidNumPlayers}
-      >
-        Start Game
-      </button>
     </div>
   );
 };
