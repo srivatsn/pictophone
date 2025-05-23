@@ -93,6 +93,7 @@ const GameScreen: React.FC<GameScreenProps> = ({
                     )}
 
                     {!showTextbox && <p className="word">{currentWord}</p>}
+                    {showTextbox && <div className="word-placeholder"></div>}
                     <DrawingCanvas ref={canvasRef} editable={!showTextbox} />
                     {showTextbox && (
                         <input
