@@ -177,6 +177,7 @@ button {
 .title-container {
   display: flex;
   align-items: center;
+  justify-content: center;
   margin-bottom: 30px;
   position: relative;
   z-index: 1;
@@ -215,6 +216,8 @@ button {
 .current-player {
   margin-right: 30px;
   font-size: 24px;
+}
+
 .game-description {
   text-align: center;
   max-width: 600px;
@@ -281,7 +284,6 @@ button {
   75% {
     transform: translate(15px, 10px) rotate(3deg);
   }
-}
 }
 
 .game-over-screen {
