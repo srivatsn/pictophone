@@ -71,36 +71,40 @@ const GameScreen: React.FC<GameScreenProps> = ({
     };
 
     return (
-        <header className="App-header">
-            <h1 className="title-container">
-                <img src="/Pictophone.png" alt="Logo" className="logo" />
-                Pictophone
-            </h1>
-            <div className="timer-container">
-                <p className="current-player">Player {currentPlayer}</p>
-                <p className="timer">Time left: {timeLeft}s</p>
-                <button onClick={endTurn} className="end-turn-button">End Turn</button>
-            </div>
-            <div className="canvas-container">
-                {countdown > 0 && (
-                    <div className="countdown-container">
-                        <div className="countdown-circle"></div>
-                        <p className="countdown">{countdown}</p>
-                    </div>
-                )}
+        <div className="game-screen">
+            <div className="floating-shape shape1"></div>
+            <div className="floating-shape shape2"></div>
+            <div className="game-screen-content">
+                <div className="title-container">
+                    <img src="/Pictophone.png" alt="Logo" className="logo" />
+                    <h1 className="title">Pictophone</h1>
+                </div>
+                <div className="timer-container">
+                    <p className="current-player">Player {currentPlayer}</p>
+                    <p className="timer">Time left: {timeLeft}s</p>
+                    <button onClick={endTurn} className="end-turn-button">End Turn</button>
+                </div>
+                <div className="canvas-container">
+                    {countdown > 0 && (
+                        <div className="countdown-container">
+                            <div className="countdown-circle"></div>
+                            <p className="countdown">{countdown}</p>
+                        </div>
+                    )}
 
-                {!showTextbox && <p className="word">{currentWord}</p>}
-                <DrawingCanvas ref={canvasRef} editable={!showTextbox} />
-                {showTextbox && (
-                    <input
-                        type="text"
-                        className="description"
-                        ref={descriptionRef}
-                        placeholder="Describe the drawing..."
-                    />
-                )}
+                    {!showTextbox && <p className="word">{currentWord}</p>}
+                    <DrawingCanvas ref={canvasRef} editable={!showTextbox} />
+                    {showTextbox && (
+                        <input
+                            type="text"
+                            className="description"
+                            ref={descriptionRef}
+                            placeholder="Describe the drawing..."
+                        />
+                    )}
+                </div>
             </div>
-        </header>
+        </div>
     );
 };
 
