@@ -11,7 +11,7 @@ const StartScreen: React.FC<StartScreenProps> = ({ onStartGame }) => {
   const handleNumPlayersChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     const num = parseInt(value, 10);
-    if (!isNaN(num) && num > 0 && num <= 20) {
+    if (!isNaN(num) && num >= 1 && num <= 20) {
       setIsValidNumPlayers(true);
     } else {
       setIsValidNumPlayers(false);
@@ -30,7 +30,7 @@ const StartScreen: React.FC<StartScreenProps> = ({ onStartGame }) => {
         <h1 className="title">Pictophone</h1>
       </div>
       <label htmlFor="num-players-input" className="num-players-label">
-        Number of players (0 to 20):
+        Number of players (1 to 20):
       </label>
       <input
         id="num-players-input"
@@ -39,6 +39,8 @@ const StartScreen: React.FC<StartScreenProps> = ({ onStartGame }) => {
         onChange={handleNumPlayersChange}
         placeholder="Enter number of players"
         className="num-players-input"
+        min="1"
+        max="20"
       />
       <button
         onClick={handleStartGame}
