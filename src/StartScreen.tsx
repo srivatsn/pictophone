@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { MIN_PLAYERS, MAX_PLAYERS } from './constants';
 
 interface StartScreenProps {
   onStartGame: (numPlayers: number) => void;
@@ -30,7 +31,7 @@ const StartScreen: React.FC<StartScreenProps> = ({ onStartGame }) => {
         <h1 className="title">Pictophone</h1>
       </div>
       <label htmlFor="num-players-input" className="num-players-label">
-        Number of players (1 to 20):
+        Number of players ({MIN_PLAYERS} to {MAX_PLAYERS}):
       </label>
       <input
         id="num-players-input"
