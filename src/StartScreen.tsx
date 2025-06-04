@@ -39,8 +39,8 @@ const StartScreen: React.FC<StartScreenProps> = ({ onStartGame }) => {
         onChange={handleNumPlayersChange}
         placeholder="Enter number of players"
         className="num-players-input"
-        min="1"
-        max="20"
+        min={MIN_PLAYERS}
+        max={MAX_PLAYERS}
       />
       <button
         onClick={handleStartGame}
