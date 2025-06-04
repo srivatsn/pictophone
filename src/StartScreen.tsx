@@ -11,7 +11,7 @@ const StartScreen: React.FC<StartScreenProps> = ({ onStartGame }) => {
   const handleNumPlayersChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     const num = parseInt(value, 10);
-    if (!isNaN(num) && num >= 1 && num <= 20) {
+    if (!isNaN(num) && num >= MIN_PLAYERS && num <= MAX_PLAYERS) {
       setIsValidNumPlayers(true);
     } else {
       setIsValidNumPlayers(false);
